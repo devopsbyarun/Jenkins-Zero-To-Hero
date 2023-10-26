@@ -1,0 +1,25 @@
+image: 'abhishekf5/maven-abhishek-docker-agent:v1'
+
+variables:
+SONAR_HOST-URL: http://15.206.165.61:9000
+SONAR_LOGIN: ${SONAR_LOGIN} 
+
+#define the default directory for th epipeline
+before_script:
+  - cd java-maven-sonar-argocd-helm-k8s
+
+stages:
+  - build
+  - test
+  - sonarqube
+
+build_job:
+  stage: build
+  script: 
+     - echo "compliling the code"
+     - mvn clean package 
+unit_test_job:
+  stage: test
+  script: 
+     - echo "running unit test... this will take 60 seconds"
+     - mvn test 
